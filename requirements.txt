@@ -1,0 +1,12 @@
+xgboost==3.2.0
+autogluon==1.5.0
+tabpfn==8.0.3
+tabpfn-client
+optuna
+shap
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+scipy
