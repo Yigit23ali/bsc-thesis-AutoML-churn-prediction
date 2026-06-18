@@ -28,7 +28,7 @@ cd bsc-thesis-churn-prediction
 2. Create a conda environment:
 ```bash
 conda create -n thesis python=3.10
-conda activate thesis
+conda activate thesis # give more descripitive name than 'thesis'
 ```
 
 3. Install dependencies:
@@ -68,6 +68,8 @@ All figures are saved to the `figures/` directory.
 TabPFN achieved the highest AUC-ROC and F1-score. Paired t-tests confirmed that TabPFN significantly outperforms both XGBoost (p=0.0014) and AutoGluon (p=0.0005). Tuned XGBoost and AutoGluon were not significantly different (p=0.2464).
 
 ## Requirements
+
+<!-- Not necessary to list these -->
 
 Key packages used:
 - Python 3.10
