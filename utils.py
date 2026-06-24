@@ -11,8 +11,31 @@ University of Amsterdam, 2026
 
 import numpy as np
 import pandas as pd
+import os
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
+
+
+def setup(seeds=[0, 1, 2, 3, 4]):
+    """
+    Set up the environment: create figures directory and set plot parameters.
+    Call this at the beginning of each notebook.
+
+    Parameters
+    ----------
+    seeds : list
+        List of random seeds to use across experiments.
+
+    Returns
+    -------
+    list
+        List of seeds.
+    """
+    os.makedirs('figures', exist_ok=True)
+    plt.rcParams['font.size'] = 12
+    plt.rcParams['figure.figsize'] = (8, 5)
+    return seeds
 
 
 def load_and_preprocess(filepath='Churn_Modelling.csv'):
@@ -51,6 +74,28 @@ def load_and_preprocess(filepath='Churn_Modelling.csv'):
     return X_xgb, X_auto, y
 
 
+def get_train_test_split(X, y, seed, test_size=0.2):
+    """
+    Perform stratified train/test split.
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Feature matrix.
+    y : pd.Series
+        Target variable.
+    seed : int
+        Random seed.
+    test_size : float
+        Proportion of data for test set.
+
+    Returns
+    -------
+    X_train, X_test, y_train, y_test
+    """
+    return train_test_split(X, y, test_size=test_size, random_state=seed, stratify=y)
+
+
 def evaluate_model(y_true, y_pred, y_prob, train_time, inference_time, seed):
     """
     Compute evaluation metrics for a single model run.
@@ -87,7 +132,7 @@ def evaluate_model(y_true, y_pred, y_prob, train_time, inference_time, seed):
 
 def summarize_results(results_df, model_name):
     """
-    Print mean ± std summary of results across seeds.
+    Print mean +/- std summary of results across seeds.
 
     Parameters
     ----------
@@ -96,35 +141,13 @@ def summarize_results(results_df, model_name):
     model_name : str
         Name of the model.
     """
-    print(f'\n{model_name} Results (mean ± std across seeds):')
+    print(f'\n{model_name} Results (mean +/- std across seeds):')
     for metric in ['accuracy', 'auc_roc', 'f1']:
         mean = results_df[metric].mean()
         std = results_df[metric].std()
-        print(f'  {metric}: {mean:.4f} ± {std:.4f}')
+        print(f'  {metric}: {mean:.4f} +/- {std:.4f}')
     print(f'  train_time: {results_df["train_time"].mean():.4f}s')
     print(f'  inference_time: {results_df["inference_time"].mean():.4f}s')
-
-
-def get_train_test_split(X, y, seed, test_size=0.2):
-    """
-    Perform stratified train/test split.
-
-    Parameters
-    ----------
-    X : pd.DataFrame
-        Feature matrix.
-    y : pd.Series
-        Target variable.
-    seed : int
-        Random seed.
-    test_size : float
-        Proportion of data for test set.
-
-    Returns
-    -------
-    X_train, X_test, y_train, y_test
-    """
-    return train_test_split(X, y, test_size=test_size, random_state=seed, stratify=y)
 
 
 def introduce_missing_values(X, missing_rate, seed):

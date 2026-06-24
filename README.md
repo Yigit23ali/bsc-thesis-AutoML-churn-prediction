@@ -1,5 +1,3 @@
-# bsc-thesis-AutoML-churn-prediction
-Comparing Traditional ML, AutoML and Tabular Foundation Models for Bank Customer Churn Prediction
 # Bank Customer Churn Prediction: Comparing ML, AutoML and Tabular Foundation Models
 
 This repository contains the code and experiments for my BSc Business Analytics thesis at the University of Amsterdam.
@@ -15,20 +13,20 @@ Models are evaluated on predictive performance (AUC-ROC, F1-score), computationa
 
 ## Dataset
 
-The dataset used is the [Bank Customer Churn dataset](https://www.kaggle.com/datasets/shubh0799/churn-modelling) from Kaggle. It contains 10,000 records with 14 features. Place the file `Churn_Modelling.csv` in the root directory before running the notebooks.
+The dataset used is the [Bank Customer Churn dataset](https://www.kaggle.com/datasets/shubh0799/churn-modelling) from Kaggle. It contains 10,000 records. After dropping three non-predictive identifier columns (RowNumber, CustomerId, Surname), ten predictive features remain. Place the file `Churn_Modelling.csv` in the root directory before running the notebooks.
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Yigit23ali/bsc-thesis-churn-prediction.git
-cd bsc-thesis-churn-prediction
+git clone https://github.com/Yigit23ali/bsc-thesis-AutoML-churn-prediction.git
+cd bsc-thesis-AutoML-churn-prediction
 ```
 
 2. Create a conda environment:
 ```bash
-conda create -n thesis python=3.10
-conda activate thesis
+conda create -n churn-prediction python=3.9.6
+conda activate churn-prediction
 ```
 
 3. Install dependencies:
@@ -44,7 +42,7 @@ init()
 
 ## Code Structure
 
-The experiments are organized into separate notebooks:
+Shared utility functions are in `utils.py`. The experiments are organized into separate notebooks:
 
 | Notebook | Description |
 |---|---|
@@ -70,13 +68,12 @@ TabPFN achieved the highest AUC-ROC and F1-score. Paired t-tests confirmed that 
 ## Requirements
 
 Key packages used:
-- Python 3.10
+- Python 3.9.6
 - xgboost==3.2.0
 - autogluon==1.5.0
 - tabpfn==8.0.3
 - tabpfn-client
 - optuna
-- shap
 - scikit-learn
 - pandas
 - numpy
